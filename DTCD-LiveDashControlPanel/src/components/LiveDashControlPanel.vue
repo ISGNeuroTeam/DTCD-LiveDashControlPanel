@@ -34,7 +34,7 @@
       </div>
       <div class="graph-operations">
 
-        <button @click="publishEvent('CalculateGraph')" title="Calculate graph"><i class="fas fa-play"></i></button>
+        <button @click="publishEvent('StartCalculatingGraph')" title="Calculate graph"><i class="fas fa-play"></i></button>
 
         <span class="toolbar-separator"></span>
 
@@ -88,7 +88,7 @@ export default {
       'SaveToServer',
       'SaveToFile',
       'SaveToStorage',
-      'CalculateGraph',
+      'StartCalculatingGraph',
       'FitContent',
       'ZoomIn',
       'ZoomOut',
