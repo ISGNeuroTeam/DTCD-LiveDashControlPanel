@@ -124,7 +124,7 @@ export default {
       }
     },
     async deleteCurrentGraph(){
-      await this.$root.interactionSystem.DELETERequest("/graphContent/delete", {data:[this.currentGraphID]})
+      await this.$root.interactionSystem.DELETERequest("/v2/graphContent/delete", {data:[this.currentGraphID]})
       this.createNewGraph()
     },
     openFromFile(){
@@ -152,13 +152,13 @@ export default {
       document.body.appendChild(fileInputElement)
     },
     toSelectNewGraph() {
-      this.$root.interactionSystem.GETRequest("/graph/list").then(resp=>{
+      this.$root.interactionSystem.GETRequest("/v2/graph/list").then(resp=>{
         this.graphList = resp.data
         this.graphListIsActive = true
       })
     },
     openFromServer({id}){
-      this.$root.interactionSystem.GETRequest(`/graphContent/load`,{params:{id}})
+      this.$root.interactionSystem.GETRequest(`/v2/graphContent/load`,{params:{id}})
       .then(({data:{id, name, content}})=>{
         this.currentGraphName = name
         this.currentGraphID = id
