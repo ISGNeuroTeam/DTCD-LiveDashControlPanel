@@ -157,14 +157,11 @@ export default {
         this.graphListIsActive = true
       })
     },
-    openFromServer({id}){
-      this.$root.interactionSystem.GETRequest(`/v2/graphContent/load`,{params:{id}})
-      .then(({data:{id, name, content}})=>{
-        this.currentGraphName = name
-        this.currentGraphID = id
-        this.publishEvent("OpenFromText", content)
-        this.graphListIsActive = false
-      })
+    openFromServer(graph){
+      this.publishEvent("OpenFromServer", graph.id)
+      this.graphListIsActive = false
+      this.currentGraphID = graph.id;
+      this.currentGraphName = graph.name;
     },
     openFromStorage(){
       console.log("storageSystem not supported");

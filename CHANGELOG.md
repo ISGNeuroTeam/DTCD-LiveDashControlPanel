@@ -9,3 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - main functional
+
+### Fixed
+- fixed openFromServer method not to send whole graphml file
