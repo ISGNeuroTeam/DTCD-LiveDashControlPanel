@@ -8,12 +8,12 @@
       v-model="currentGraphName"
       />
       <div class="file-operations">
-        <button @click="createNewGraph" title="Create new graph"> <i class="far fa-file"></i></button>
-        <button @click="deleteCurrentGraph" :disabled="!Number.isFinite(currentGraphID)" title="Delete current graph"> <i class="fas fa-trash"></i></button>
+        <button @click="publishEvent('ClearGraph')" title="Create new graph"> <i class="far fa-file"></i></button>
+        <button @click="deleteFromServer" :disabled="currentGraphID===null" title="Delete current graph"> <i class="fas fa-trash"></i></button>
 
         <span class="toolbar-separator"></span>
 
-        <button @click="openFromFile" title="Open a file using the HTML 5 FileReader API"><i class="fas fa-folder-open" ></i></button>
+        <button @click="publishEvent('OpenFromFile')" title="Open a file using the HTML 5 FileReader API"><i class="fas fa-folder-open" ></i></button>
         <button v-if="!graphListIsActive" @click="toSelectNewGraph" title="Open a file using a server round-trip"><i class="fas fa-cloud-download-alt" ></i></button>
         <button v-else @click="graphListIsActive = false" title="Close server round-trip observer"><i class="fas fa-close" ></i></button>
         <graph-list-select 
@@ -83,8 +83,8 @@ export default {
     // ----LiveDashPanel events---- 
     const eventList = [
       'ClearGraph',
-      'DeleteCurrentGraph',
-      'OpenFromText',
+      'DeleteFromServer',
+      'OpenFromFile',
       'SaveToServer',
       'SaveToFile',
       'SaveToStorage',
@@ -102,6 +102,9 @@ export default {
     ]
     eventList.forEach(evtName => eventSystem.registerEvent(eventSystem.createEvent(this.$root.guid, evtName)))
 
+    const customEvent = eventSystem.createEvent(this.$root.liveDashGUID, "SetNewGraph")
+    const customAction = eventSystem.createActionByCallback( "setNewGraphInfo", this.$root.guid, this.setNewGraphInfo.bind(this));
+    eventSystem.subscribe(customEvent, customAction)
   },
   beforeDestroy() {
     document.removeEventListener("click", this.graphListIsActiveHandler)
@@ -116,41 +119,20 @@ export default {
     closeSelectNewGraph(){
       this.graphListIsActive = false
     },
-    createNewGraph(){
-      if (confirm('Do you want to create new Graph?\nWarning: unsaved changes will be lost!')) {
-        this.publishEvent("ClearGraph")
-        this.currentGraphName = ''
-        this.currentGraphID = null
+    setNewGraphInfo(data){
+      if(data.args){
+        const {id=null,name=''} = data.args
+        this.currentGraphID = id;
+        this.currentGraphName = name
+      } else {
+        alert("Params without graphID")
       }
     },
-    async deleteCurrentGraph(){
-      await this.$root.interactionSystem.DELETERequest("/v2/graphContent/delete", {data:[this.currentGraphID]})
-      this.createNewGraph()
+
+    deleteFromServer(){
+      this.publishEvent("DeleteFromServer",{id:this.currentGraphID})
     },
-    openFromFile(){
-      const fileInputElement = document.createElement('input')
-      fileInputElement.setAttribute('type', "file")
-      fileInputElement.style.display = 'none'
-      fileInputElement.addEventListener("change",()=>{
-        if (!fileInputElement.files || fileInputElement.files.length <= 0) {
-          throw new Error('There is no file to open')
-        }
-        const reader = new FileReader()
-        reader.onloadend = evt => {
-          const fileReader = evt.target
-          if (fileReader.error === null) {
-            if(confirm("Warning: unsaved changes will be lost!"))
-            this.publishEvent("OpenFromText", fileReader.result)
-          } else {
-            throw Error(fileReader.error)
-          }
-        }
-        reader.readAsText(fileInputElement.files[0])
-        document.body.removeChild(fileInputElement)
-      })
-      fileInputElement.click()
-      document.body.appendChild(fileInputElement)
-    },
+    
     toSelectNewGraph() {
       this.$root.interactionSystem.GETRequest("/v2/graph/list").then(resp=>{
         this.graphList = resp.data
@@ -163,9 +145,11 @@ export default {
       this.currentGraphID = graph.id;
       this.currentGraphName = graph.name;
     },
+
     openFromStorage(){
       console.log("storageSystem not supported");
     },
+
     saveToServer(){
       if(!this.currentGraphName) alert("Please, enter name of new graph or select saved graph!")
       else this.publishEvent("SaveToServer", {name:this.currentGraphName, id: this.currentGraphID})
