@@ -148,7 +148,7 @@ export default {
     },
 
     toSelectNewGraph() {
-      this.$root.interactionSystem.GETRequest('/v2/graph/list').then(resp => {
+      this.$root.interactionSystem.GETRequest('/mock_server/v1/graphContent/object').then(resp => {
         this.graphList = resp.data;
         this.graphListIsActive = true;
       });
