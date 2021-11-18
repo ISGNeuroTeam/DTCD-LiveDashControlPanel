@@ -133,9 +133,9 @@ export default {
     closeSelectNewGraph() {
       this.graphListIsActive = false;
     },
-    setNewGraphInfo(data) {
-      if (data.args) {
-        const { id = null, name = '' } = data.args;
+    setNewGraphInfo(graphInfo) {
+      if (graphInfo) {
+        const { id = null, name = '' } = graphInfo;
         this.currentGraphID = id;
         this.currentGraphName = name;
       } else {
