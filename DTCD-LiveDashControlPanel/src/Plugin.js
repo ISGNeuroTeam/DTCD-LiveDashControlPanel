@@ -13,19 +13,24 @@ export class Plugin extends PanelPlugin {
     return pluginMeta;
   }
 
-  constructor(guid, selector, liveDashGUID) {
+  constructor(guid, selector) {
     super();
 
-    const eventSystem = new EventSystemAdapter();
+    const eventSystem = new EventSystemAdapter(guid);
     const storageSystem = new StorageSystemAdapter();
     const interactionSystem = new InteractionSystemAdapter();
 
     const VueJS = this.getDependence('Vue');
-    const data = {guid, liveDashGUID, eventSystem, storageSystem, interactionSystem};
+    const data = { guid, eventSystem, storageSystem, interactionSystem };
 
-    new VueJS.default({
+    this.vue = new VueJS.default({
       data: () => data,
       render: h => h(PluginComponent),
     }).$mount(selector);
+  }
+
+  setNewGraphInfo(graphData) {
+    const component = this.vue.$children[0].$children[0];
+    return component.setNewGraphInfo(graphData);
   }
 }
