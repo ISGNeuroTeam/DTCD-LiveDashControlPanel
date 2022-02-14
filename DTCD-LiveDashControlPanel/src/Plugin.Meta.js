@@ -1,8 +1,10 @@
+import { version } from './../package.json';
+
 export default {
+  version,
   type: 'extension',
   target: 'LiveDashPanel',
   name: 'LiveDashControlPanel',
   title: 'Панель управления графом',
-  version: '0.1.0',
   withDependencies: true,
 };

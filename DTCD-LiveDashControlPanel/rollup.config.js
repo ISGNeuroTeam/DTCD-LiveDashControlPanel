@@ -5,14 +5,18 @@ import vue from 'rollup-plugin-vue2';
 import alias from '@rollup/plugin-alias';
 import styles from 'rollup-plugin-styles';
 import replace from '@rollup/plugin-replace';
+import json from '@rollup/plugin-json';
+
+import { version } from './package.json';
 
 const watch = Boolean(process.env.ROLLUP_WATCH);
 
-const pluginName = pluginMeta.name;
+const pluginName = pluginMeta.name.replace(/_/g, '-');
 const outputFile = `${pluginName}.js`;
-const outputDirectory = watch ? `./../../DTCD/server/plugins/DTCD-${pluginName}` : `./build`;
+const outputDirectory = watch ? `./../../DTCD/server/plugins/DTCD-${pluginName}_${version}` : `./build`;
 
 const plugins = [
+  json(),
   vue(),
   alias({
     entries: {

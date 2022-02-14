@@ -16,9 +16,9 @@ export class Plugin extends PanelPlugin {
   constructor(guid, selector) {
     super();
 
-    const eventSystem = new EventSystemAdapter(guid);
-    const storageSystem = new StorageSystemAdapter();
-    const interactionSystem = new InteractionSystemAdapter();
+    const eventSystem = new EventSystemAdapter('0.3.0', guid);
+    const storageSystem = new StorageSystemAdapter('0.4.0');
+    const interactionSystem = new InteractionSystemAdapter('0.3.1');
 
     const VueJS = this.getDependence('Vue');
     const data = { guid, eventSystem, storageSystem, interactionSystem };
