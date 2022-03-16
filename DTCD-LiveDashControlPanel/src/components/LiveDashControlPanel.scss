@@ -1,0 +1,74 @@
+.LiveDashControlPanel {
+  display: flex;
+  background-color: var(--background_main);
+  padding: 10px;
+  border-bottom: 1px solid var(--border_secondary);
+
+  // necessary for the correct work of BaseTooltip
+  position: relative;
+  z-index: 1;
+
+  &,
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
+
+  .DragButton {
+    border: none;
+    background-color: transparent;
+    height: 24px;
+    padding: 0;
+    display: inline-flex;
+    padding-right: 8px;
+  }
+
+  .InputWrapper {
+    flex: none;
+    width: 150px;
+    margin-right: 8px;
+    position: relative;
+  }
+
+  .InputIcon {
+    display: inline-flex;
+    position: absolute;
+    top: 14px;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+
+    &.type_edit {
+      right: 7px;
+    }
+
+    &.type_save {
+      cursor: pointer;
+      right: 27px;
+    }
+
+    &.type_close {
+      cursor: pointer;
+      right: 12px;
+    }
+  }
+
+  .Buttons {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 4px;
+    row-gap: 10px;
+
+    &Separator {
+      height: 28px;
+      width: 2px;
+      background-color: var(--border_secondary);
+      display: inline-block;
+      vertical-align: middle;
+    }
+  } 
+}
