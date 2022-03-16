@@ -1,7 +1,7 @@
 <template>
   <div class="Select">
-    <ul class="Select-Menu">
-      <li class="Select-Item"
+    <ul class="Menu">
+      <li class="Item"
       v-for="(option, index) in this.graphList" 
       :key="index"
       :style="option.name === currentGraphName?{'background-color':'rgb(153, 204, 255, .2)'}:{}"
@@ -36,7 +36,7 @@ export default {
   vertical-align: middle;
   z-index: 1;
 
-  &-Menu{
+  .Menu{
     border: 1px solid var(--border);
     background-color: var(--background_main);
     list-style-type: none;
@@ -44,7 +44,7 @@ export default {
     border-radius: 4.44px;
   }
 
-  &-Item { 
+  .Item { 
     font-weight: 400;
     font-size: 11px;
     color: var(--text_secondary);

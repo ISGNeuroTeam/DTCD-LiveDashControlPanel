@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="Toolbar">
-      <!--<button class="Toolbar-Button">
+      <!--<button class="Button">
         <svg width="6" height="25" viewBox="0 0 6 22" xmlns="http://www.w3.org/2000/svg">
           <circle cx="1" cy="1" r="1" fill="#C6C6D4"/>
           <circle cx="5" cy="1" r="1" fill="#C6C6D4"/>
@@ -17,25 +17,25 @@
           <circle cx="5" cy="21" r="1" fill="#C6C6D4"/>
         </svg>
       </button>-->
-      <div class="Toolbar-InputWrapper">
+      <div class="InputWrapper">
         <base-input id="textField" type="text" placeholder="Graph name...">
         </base-input>
-        <!--<svg class="Toolbar-InputIcon Toolbar-InputIcon_edit" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!--<svg class="InputIcon InputIcon_edit" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M2.21 10.2893C2.06974 10.2891 1.93603 10.2299 1.8415 10.1263C1.74522 10.0236 1.69738 9.88459 1.71 9.74433L1.8325 8.39733L7.4915 2.74033L9.25999 4.50833L3.6025 10.1648L2.2555 10.2873C2.24 10.2888 2.2245 10.2893 2.21 10.2893ZM9.61299 4.15483L7.845 2.38683L8.90549 1.32633C8.99928 1.23244 9.12654 1.17969 9.25924 1.17969C9.39195 1.17969 9.51921 1.23244 9.61299 1.32633L10.6735 2.38683C10.7674 2.48062 10.8201 2.60788 10.8201 2.74058C10.8201 2.87329 10.7674 3.00055 10.6735 3.09433L9.61349 4.15433L9.61299 4.15483Z" fill="#938FA0"/>
         </svg>-->
-        <button class="Toolbar-InputIcon Toolbar-InputIcon_save">
+        <button class="InputIcon InputIcon_save">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M10.4194 3.34709L4.40899 9.3575L1.58057 6.52907L2.28557 5.82407L4.40899 7.9425L9.7144 2.64209L10.4194 3.34709Z" fill="#938FA0"/>
           </svg>
         </button>
-        <button class="Toolbar-InputIcon Toolbar-InputIcon_close">
+        <button class="InputIcon InputIcon_close">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M10.2861 2.40643L9.37971 1.5L5.78613 5.09357L2.19256 1.5L1.28613 2.40643L4.8797 6L1.28613 9.59357L2.19256 10.5L5.78613 6.90643L9.37971 10.5L10.2861 9.59357L6.69256 6L10.2861 2.40643Z" fill="#938FA0"/>
           </svg>
         </button>
       </div>
 
-      <div class="Toolbar-Buttons">
+      <div class="Buttons">
 
         <base-tooltip content="Create new graph">
           <base-icon-button @click="publishEvent('ClearGraph')">
@@ -53,7 +53,7 @@
           </base-icon-button>
         </base-tooltip>
 
-        <span class="Toolbar-Buttons Toolbar-Buttons_separator"></span>
+        <span class="Buttons Buttons_separator"></span>
 
         <base-tooltip content="Open a file using the HTML 5 FileReader API">
           <base-icon-button @click="publishEvent('OpenFromFile')">
@@ -97,7 +97,7 @@
           </base-icon-button>
         </base-tooltip>
 
-        <span class="Toolbar-Buttons Toolbar-Buttons_separator"></span>
+        <span class="Buttons Buttons_separator"></span>
 
         <base-tooltip content="Save to the server">
           <base-icon-button @click="saveToServer">
@@ -123,7 +123,7 @@
           </base-icon-button>
         </base-tooltip>
        
-        <span class="Toolbar-Buttons Toolbar-Buttons_separator"></span>
+        <span class="Buttons Buttons_separator"></span>
 
         <base-tooltip content="Calculate graph">
           <base-icon-button @click="publishEvent('StartCalculatingGraph')">
@@ -133,7 +133,7 @@
           </base-icon-button>
         </base-tooltip>
 
-        <span class="Toolbar-Buttons Toolbar-Buttons_separator"></span>
+        <span class="Buttons Buttons_separator"></span>
 
         <base-tooltip content="Fit Content">
           <base-icon-button @click="publishEvent('FitContent')">
@@ -172,7 +172,7 @@
           </base-icon-button>
         </base-tooltip>
 
-        <span class="Toolbar-Buttons Toolbar-Buttons_separator"></span>
+        <span class="Buttons Buttons_separator"></span>
 
         <base-tooltip content="Cut">
           <base-icon-button @click="publishEvent('CutItems')">
@@ -207,7 +207,7 @@
           </base-icon-button>
         </base-tooltip>
 
-        <span class="Toolbar-Buttons Toolbar-Buttons_separator"></span>
+        <span class="Buttons Buttons_separator"></span>
 
         <base-tooltip content="Undo"  >
           <base-icon-button @click="publishEvent('UndoGraph')">
@@ -313,7 +313,14 @@ export default {
   margin-bottom: 10px;
   box-shadow: 1px 1px 2px 0px rgba(8, 18, 55, 0.12);
 
-  &-Button {
+  &,
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
+
+  .Button {
     border: none;
     background-color: transparent;
     height: 24px;
@@ -322,7 +329,7 @@ export default {
     padding-right: 8px;
   }
 
-  &-InputWrapper {
+  .InputWrapper {
     width: 150px;
     padding-right: 8px;
     display: flex;
@@ -333,7 +340,7 @@ export default {
     }
   }
 
-  &-InputIcon {
+  .InputIcon {
     position: absolute;
     top: 8px;
     width: 12px;
@@ -343,22 +350,22 @@ export default {
     cursor: pointer;
 
     &_edit {
-      top: 9px;
+      top: 8px;
       right: 15px;
     }
 
     &_save {
-      top: 8px;
+      top: 7px;
       right: 35px;
     }
 
     &_close {
-      top: 8px;
+      top: 7px;
       right: 20px;
     }
   }
 
-  &-Buttons {
+  .Buttons {
     display: flex;
     flex-wrap: wrap;
     column-gap: 4px;
