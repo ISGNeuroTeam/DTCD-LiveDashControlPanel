@@ -18,17 +18,25 @@
     </button>-->
 
     <div class="InputWrapper">
-      <base-input id="textField" type="text" placeholder="Graph name...">
-      </base-input>
-      <!--<svg class="InputIcon type_edit" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <base-input
+        placeholder="Graph name..."
+        :value="inputGraphNameValue"
+        @input="event => inputGraphNameValue = event.target.value"
+        @focus="doEditGraphName = true"
+        @blur="handleInputGraphNameBlur"
+      ></base-input>
+      <svg
+        v-if="doEditGraphName == false"
+        class="InputIcon type_edit"
+        width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"
+      >
         <path d="M2.21 10.2893C2.06974 10.2891 1.93603 10.2299 1.8415 10.1263C1.74522 10.0236 1.69738 9.88459 1.71 9.74433L1.8325 8.39733L7.4915 2.74033L9.25999 4.50833L3.6025 10.1648L2.2555 10.2873C2.24 10.2888 2.2245 10.2893 2.21 10.2893ZM9.61299 4.15483L7.845 2.38683L8.90549 1.32633C8.99928 1.23244 9.12654 1.17969 9.25924 1.17969C9.39195 1.17969 9.51921 1.23244 9.61299 1.32633L10.6735 2.38683C10.7674 2.48062 10.8201 2.60788 10.8201 2.74058C10.8201 2.87329 10.7674 3.00055 10.6735 3.09433L9.61349 4.15433L9.61299 4.15483Z" fill="#938FA0"/>
-      </svg>-->
-      <button class="InputIcon type_save">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10.4194 3.34709L4.40899 9.3575L1.58057 6.52907L2.28557 5.82407L4.40899 7.9425L9.7144 2.64209L10.4194 3.34709Z" fill="#938FA0"/>
-        </svg>
-      </button>
-      <button class="InputIcon type_close">
+      </svg>
+      <button
+        v-if="doEditGraphName"
+        class="InputIcon type_close"
+        @click="cancelEditGraphInfo"
+      >
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M10.2861 2.40643L9.37971 1.5L5.78613 5.09357L2.19256 1.5L1.28613 2.40643L4.8797 6L1.28613 9.59357L2.19256 10.5L5.78613 6.90643L9.37971 10.5L10.2861 9.59357L6.69256 6L10.2861 2.40643Z" fill="#938FA0"/>
         </svg>
@@ -62,30 +70,32 @@
         </base-icon-button>
       </base-tooltip>
 
-      <base-tooltip content="Open a file using a server round-trip" placement="bottom">
-        <base-icon-button>
-          <svg 
-            v-if="!graphListIsActive"
-            @click="toSelectNewGraph" 
-            width="18" height="16" viewBox="0 0 18 16" xmlns="http://www.w3.org/2000/svg"
-          >
-            <g clip-path="url(#clip0_2269_3767)">
-              <path d="M13.6688 13.3332H4.99975C2.91542 13.3345 1.17929 11.7358 1.00955 9.65898C0.83982 7.58215 2.29335 5.72294 4.35024 5.38591C5.29698 3.70784 7.07374 2.66892 9.00086 2.66654C10.2025 2.662 11.3698 3.06745 12.3098 3.81591C13.2328 4.54782 13.889 5.56323 14.177 6.70525C15.9 6.96993 17.1283 8.51693 16.9951 10.2546C16.8619 11.9924 15.4121 13.3342 13.6688 13.3332ZM9.00086 3.99991C7.55493 4.00162 6.22187 4.78131 5.51189 6.04058L5.19981 6.59991L4.56696 6.70325C3.20011 6.93218 2.23632 8.16944 2.34916 9.55037C2.46199 10.9313 3.61385 11.9958 4.99975 11.9999H13.6688C14.7148 12.001 15.5851 11.1963 15.6655 10.1537C15.7459 9.11107 15.0094 8.18251 13.9756 8.02325L13.098 7.88991L12.8833 7.02858C12.44 5.24645 10.8378 3.99655 9.00086 3.99991ZM9.00086 10.6666L6.33345 7.99991H8.03393V5.99991H9.9678V7.99991H11.6683L9.00086 10.6666Z"/>
-            </g>
-            <defs>
-              <clipPath id="clip0_2269_3767">
-                <rect width="16.0044" height="16" fill="white" transform="translate(0.998535)"/>
-              </clipPath>
-            </defs>
-          </svg>
-          <svg 
-            v-else
-            @click="graphListIsActive = false"
-            width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-          >
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.0002 8.28799L5.99023 14.298L7.40423 15.713L12.0042 11.113L16.6042 15.713L18.0112 14.298L12.0002 8.28799Z"/>
-          </svg>
-        </base-icon-button>
+      <div class="GraphListDropDownWrapper">
+        <base-tooltip content="Open a file using a server round-trip" placement="bottom">
+          <base-icon-button>
+            <svg 
+              v-if="!graphListIsActive"
+              @click="toSelectNewGraph" 
+              width="18" height="16" viewBox="0 0 18 16" xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_2269_3767)">
+                <path d="M13.6688 13.3332H4.99975C2.91542 13.3345 1.17929 11.7358 1.00955 9.65898C0.83982 7.58215 2.29335 5.72294 4.35024 5.38591C5.29698 3.70784 7.07374 2.66892 9.00086 2.66654C10.2025 2.662 11.3698 3.06745 12.3098 3.81591C13.2328 4.54782 13.889 5.56323 14.177 6.70525C15.9 6.96993 17.1283 8.51693 16.9951 10.2546C16.8619 11.9924 15.4121 13.3342 13.6688 13.3332ZM9.00086 3.99991C7.55493 4.00162 6.22187 4.78131 5.51189 6.04058L5.19981 6.59991L4.56696 6.70325C3.20011 6.93218 2.23632 8.16944 2.34916 9.55037C2.46199 10.9313 3.61385 11.9958 4.99975 11.9999H13.6688C14.7148 12.001 15.5851 11.1963 15.6655 10.1537C15.7459 9.11107 15.0094 8.18251 13.9756 8.02325L13.098 7.88991L12.8833 7.02858C12.44 5.24645 10.8378 3.99655 9.00086 3.99991ZM9.00086 10.6666L6.33345 7.99991H8.03393V5.99991H9.9678V7.99991H11.6683L9.00086 10.6666Z"/>
+              </g>
+              <defs>
+                <clipPath id="clip0_2269_3767">
+                  <rect width="16.0044" height="16" fill="white" transform="translate(0.998535)"/>
+                </clipPath>
+              </defs>
+            </svg>
+            <svg 
+              v-else
+              @click="graphListIsActive = false"
+              width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+            >
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12.0002 8.28799L5.99023 14.298L7.40423 15.713L12.0042 11.113L16.6042 15.713L18.0112 14.298L12.0002 8.28799Z"/>
+            </svg>
+          </base-icon-button>
+        </base-tooltip>
         <graph-list-select
           v-show="graphListIsActive"
           ref="graphListDropDown"
@@ -93,7 +103,7 @@
           :currentGraphName="currentGraphName"
           :graphList="graphList"
         ></graph-list-select>
-      </base-tooltip>
+      </div>
 
       <base-tooltip content="Open the graph that was saved to the 'Storage'" placement="bottom">
         <base-icon-button @click="openFromStorage">
@@ -247,6 +257,8 @@ export default {
       currentGraphName: '',
       currentGraphID: null,
       inWait: false,
+      doEditGraphName: false,
+      inputGraphNameValue: '',
     };
   },
   mounted() {
@@ -271,6 +283,7 @@ export default {
         const { id = null, name = '' } = graphInfo;
         this.currentGraphID = id;
         this.currentGraphName = name;
+        this.inputGraphNameValue = name;
       } else {
         alert('Params without graphID');
       }
@@ -291,6 +304,7 @@ export default {
       this.graphListIsActive = false;
       this.currentGraphID = graph.id;
       this.currentGraphName = graph.name;
+      this.inputGraphNameValue = graph.name;
     },
 
     openFromStorage() {
@@ -298,9 +312,31 @@ export default {
     },
 
     saveToServer() {
-      if (!this.currentGraphName) alert('Please, enter name of new graph or select saved graph!');
-      else
-        this.publishEvent('SaveToServer', { name: this.currentGraphName, id: this.currentGraphID });
+      if (!this.inputGraphNameValue) {
+        alert('Please, enter name of new graph or select saved graph!');
+      } else {
+        this.publishEvent('SaveToServer', {
+          name: this.inputGraphNameValue.trim(),
+          id: this.currentGraphID,
+        });
+
+        this.doEditGraphName = false;
+      }
+    },
+
+    handleInputGraphNameBlur() {
+      if ( ! this.inputGraphNameValue) {
+        this.inputGraphNameValue = this.currentGraphName;
+      }
+
+      if (this.inputGraphNameValue === this.currentGraphName) {
+        this.doEditGraphName = false;
+      }
+    },
+
+    cancelEditGraphInfo() {
+      this.doEditGraphName = false;
+      this.inputGraphNameValue = this.currentGraphName;
     },
   },
 };
