@@ -3,6 +3,7 @@
   background-color: var(--background_main);
   padding: 10px;
   border-bottom: 1px solid var(--border_secondary);
+  justify-content: space-between;
 
   // necessary for the correct work of BaseTooltip
   position: relative;
