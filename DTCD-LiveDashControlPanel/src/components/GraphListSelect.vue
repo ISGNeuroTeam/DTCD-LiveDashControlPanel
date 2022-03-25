@@ -2,15 +2,12 @@
   <div class="Select">
     <ul class="Menu">
       <li class="Item"
-      v-for="(option, index) in this.graphList" 
-      :key="index"
-      :style="option.name === currentGraphName?{'background-color':'rgb(153, 204, 255, .2)'}:{}"
-      >
-        <div 
         @click="$emit('updateOption', option)"
-        >
-          {{ option.name }}
-        </div>
+        v-for="(option, index) in this.graphList" 
+        :key="index"
+        :class="option.name === currentGraphName ? 'selected' : ''"
+      >
+        {{ option.name }}
       </li>
     </ul>
   </div>
@@ -28,10 +25,12 @@ export default {
 
 <style lang="scss"scoped>
 .Select {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
   min-width: 160px;
   width: 249px;
-  position: absolute;
-  margin: 20px -131px ;
   display: inline-block;
   vertical-align: middle;
   z-index: 1;
@@ -42,23 +41,29 @@ export default {
     list-style-type: none;
     padding-left: 0;
     border-radius: 4.44px;
+    margin: 0;
   }
 
   .Item { 
     font-weight: 400;
-    font-size: 11px;
+    font-size: 14px;
     color: var(--text_secondary);
-    padding: 4.5px 0 4.5px 12px;
+    padding: 7px 10px;
     border-bottom: 1px solid var(--border);
+    cursor: pointer;
+
     &:last-child {
       border-bottom: 0;
     }
+
+    &.selected {
+      background-color: var(--button_primary_12);
+    }
+
     &:hover {
-      border: 3px solid var(--button_primary); 
+      box-shadow: 0 0 0 3px var(--button_primary);
       color: var(--text_main);
       border-radius: 4.44px;
-      cursor: pointer;
-      margin: 0 -3px;
     }
   }
 }

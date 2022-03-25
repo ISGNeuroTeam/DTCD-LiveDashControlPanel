@@ -9,9 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - web-components
+- edit scripts of graph name
 
 ### Changed
-- styling of LiveDashControlPanel 
+- styling of LiveDashControlPanel
 - styling of GraphListSelect
 
 ## [0.2.0]
