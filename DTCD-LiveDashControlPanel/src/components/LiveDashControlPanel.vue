@@ -25,13 +25,13 @@
         @focus="doEditGraphName = true"
         @blur="handleInputGraphNameBlur"
       ></base-input>
-      <svg
+      <!--<svg
         v-if="doEditGraphName == false"
         class="InputIcon type_edit"
         width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"
       >
         <path d="M2.21 10.2893C2.06974 10.2891 1.93603 10.2299 1.8415 10.1263C1.74522 10.0236 1.69738 9.88459 1.71 9.74433L1.8325 8.39733L7.4915 2.74033L9.25999 4.50833L3.6025 10.1648L2.2555 10.2873C2.24 10.2888 2.2245 10.2893 2.21 10.2893ZM9.61299 4.15483L7.845 2.38683L8.90549 1.32633C8.99928 1.23244 9.12654 1.17969 9.25924 1.17969C9.39195 1.17969 9.51921 1.23244 9.61299 1.32633L10.6735 2.38683C10.7674 2.48062 10.8201 2.60788 10.8201 2.74058C10.8201 2.87329 10.7674 3.00055 10.6735 3.09433L9.61349 4.15433L9.61299 4.15483Z" fill="#938FA0"/>
-      </svg>
+      </svg>-->
       <button
         v-if="doEditGraphName"
         class="InputIcon type_close"
@@ -62,7 +62,7 @@
 
       <span class="ButtonsSeparator"></span>
 
-      <base-tooltip content="Open a file using the HTML 5 FileReader API" placement="bottom">
+      <base-tooltip content="Open file from" placement="bottom">
         <base-icon-button @click="publishEvent('OpenFromFile')">
           <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
             <path d="M14.332 14H3.66536C2.92898 14 2.33203 13.403 2.33203 12.6667V3.33333C2.33203 2.59695 2.92898 2 3.66536 2H7.66536C7.84216 2 8.0117 2.0703 8.1367 2.19533L9.2747 3.33333H14.332C15.0684 3.33333 15.6654 3.93029 15.6654 4.66667V12.6667C15.6654 13.403 15.0684 14 14.332 14ZM3.66536 4.66667V12.6667H14.332V4.66667H3.66536Z"/>
@@ -71,7 +71,7 @@
       </base-tooltip>
 
       <div class="GraphListDropDownWrapper">
-        <base-tooltip content="Open a file using a server round-trip" placement="bottom">
+        <base-tooltip content="Open from server" placement="bottom">
           <base-icon-button>
             <svg 
               v-if="!graphListIsActive"
@@ -105,13 +105,13 @@
         ></graph-list-select>
       </div>
 
-      <base-tooltip content="Open the graph that was saved to the 'Storage'" placement="bottom">
+      <!--<base-tooltip content="Open the graph that was saved to the 'Storage'" placement="bottom">
         <base-icon-button @click="openFromStorage">
           <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M12.1945 5.3335H3.81163L1.33643 9.3335V10.0002C1.33643 12.2093 3.12728 14.0002 5.33642 14.0002H10.6698C12.8789 14.0002 14.6698 12.2093 14.6698 10.0002V9.3335L12.1945 5.3335ZM13.6046 9.3335L11.8116 6.3335H4.19454L2.40154 9.3335H6.1169C6.39145 10.1103 7.13228 10.6668 8.00309 10.6668C8.87391 10.6668 9.61473 10.1103 9.88929 9.3335H13.6046Z"/>
           </svg>
         </base-icon-button>
-      </base-tooltip>
+      </base-tooltip>-->
 
       <span class="ButtonsSeparator"></span>
 
@@ -123,7 +123,7 @@
         </base-icon-button>
       </base-tooltip>
 
-      <base-tooltip content="Download using the HTML5 File API" placement="bottom">
+      <base-tooltip content="Download file " placement="bottom">
         <base-icon-button @click="publishEvent('SaveToFile', currentGraphName)">
           <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
             <path d="M12.6693 14.6668H3.33594V13.3335H12.6693V14.6668ZM8.0026 12.0002L4.0026 8.00016L4.9426 7.06016L7.33594 9.44683V1.3335H8.66927V9.44683L11.0626 7.06016L12.0026 8.00016L8.0026 12.0002Z"/>
@@ -131,13 +131,13 @@
         </base-icon-button>
       </base-tooltip>
 
-      <base-tooltip content="Save to the 'Storage'" placement="bottom">
+      <!--<base-tooltip content="Save to the 'Storage'" placement="bottom">
         <base-icon-button @click="publishEvent('SaveToStorage')">
           <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
             <path d="M8.00228 14.6668C5.11161 14.6668 2.66895 13.3102 2.66895 11.7042V4.29616C2.66895 2.69016 5.11161 1.3335 8.00228 1.3335C10.8929 1.3335 13.3356 2.69016 13.3356 4.29616V11.7042C13.3356 13.3102 10.8936 14.6668 8.00228 14.6668ZM4.00228 9.9335V11.7062C4.04895 12.0748 5.54161 13.1875 8.00228 13.1875C10.4629 13.1875 11.9563 12.0715 12.0023 11.7022V9.9335C10.7885 10.6371 9.4049 10.9938 8.00228 10.9648C6.59966 10.9939 5.216 10.6371 4.00228 9.9335ZM4.00228 6.2275V8.00016C4.04895 8.36883 5.54161 9.4815 8.00228 9.4815C10.4629 9.4815 11.9563 8.3655 12.0023 7.99616V6.2275C10.7886 6.93135 9.40496 7.28833 8.00228 7.2595C6.59959 7.28837 5.21592 6.93138 4.00228 6.2275ZM8.00228 2.81483C5.54095 2.81483 4.04828 3.93083 4.00228 4.30083C4.04895 4.66683 5.54295 5.7775 8.00228 5.7775C10.4616 5.7775 11.9563 4.6615 12.0023 4.29216C11.9556 3.92483 10.4616 2.81483 8.00228 2.81483Z"/>
           </svg>
         </base-icon-button>
-      </base-tooltip>
+      </base-tooltip>-->
       
       <span class="ButtonsSeparator"></span>
 
