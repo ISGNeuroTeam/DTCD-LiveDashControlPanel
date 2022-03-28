@@ -62,7 +62,7 @@
 
       <span class="ButtonsSeparator"></span>
 
-      <base-tooltip content="Open file from" placement="bottom">
+      <base-tooltip content="Open from file" placement="bottom">
         <base-icon-button @click="publishEvent('OpenFromFile')">
           <svg width="17" height="16" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
             <path d="M14.332 14H3.66536C2.92898 14 2.33203 13.403 2.33203 12.6667V3.33333C2.33203 2.59695 2.92898 2 3.66536 2H7.66536C7.84216 2 8.0117 2.0703 8.1367 2.19533L9.2747 3.33333H14.332C15.0684 3.33333 15.6654 3.93029 15.6654 4.66667V12.6667C15.6654 13.403 15.0684 14 14.332 14ZM3.66536 4.66667V12.6667H14.332V4.66667H3.66536Z"/>
