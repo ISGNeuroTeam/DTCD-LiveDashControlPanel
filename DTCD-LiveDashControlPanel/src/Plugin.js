@@ -1,6 +1,5 @@
 import pluginMeta from './Plugin.Meta';
 import PluginComponent from './PluginComponent.vue';
-import './../fonts/fonts.css';
 
 import {
   PanelPlugin,
