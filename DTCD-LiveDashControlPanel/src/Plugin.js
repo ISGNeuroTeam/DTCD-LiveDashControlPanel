@@ -33,4 +33,27 @@ export class Plugin extends PanelPlugin {
     const component = this.vue.$children[0].$children[0];
     return component.setNewGraphInfo(graphData);
   }
+
+  getEventList() {
+    return [
+      'ClearGraph',
+      'DeleteFromServer',
+      'OpenFromFile',
+      'OpenFromServer',
+      'SaveToFile',
+      'SaveToServer',
+      'StartCalculatingGraph',
+      // 'SaveToStorage',
+      'FitContent',
+      'ZoomIn',
+      'ZoomOut',
+      'ZoomOriginal',
+      'CutItems',
+      'CopyItems',
+      'PasteItems',
+      'DeleteItems',
+      'UndoGraph',
+      'RedoGraph',
+    ];
+  }
 }

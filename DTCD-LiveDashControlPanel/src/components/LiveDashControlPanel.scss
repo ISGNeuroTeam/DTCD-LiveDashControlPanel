@@ -1,0 +1,72 @@
+.LiveDashControlPanel {
+  display: flex;
+  align-items: flex-start;
+  background-color: var(--background_main);
+  padding: 10px;
+  border-bottom: 1px solid var(--border_secondary);
+  justify-content: space-between;
+
+  // necessary for the correct work of BaseTooltip and GraphListSelect
+  position: relative;
+  z-index: 15;
+  font-family: 'Proxima Nova';
+
+  &,
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
+
+  .DragButton {
+    border: none;
+    background-color: transparent;
+    height: 24px;
+    padding: 0;
+    display: inline-flex;
+    padding-right: 8px;
+  }
+
+  .InputWrapper {
+    flex: none;
+    width: 150px;
+    margin-right: 8px;
+    position: relative;
+  }
+
+  .InputIcon {
+    display: inline-flex;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+  }
+  
+  button.InputIcon {
+    cursor: pointer;
+  }
+
+  .Buttons {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 4px;
+    row-gap: 10px;
+
+    &Separator {
+      height: 28px;
+      width: 2px;
+      background-color: var(--border_secondary);
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .GraphListDropDownWrapper {
+    position: relative;
+  }
+}
