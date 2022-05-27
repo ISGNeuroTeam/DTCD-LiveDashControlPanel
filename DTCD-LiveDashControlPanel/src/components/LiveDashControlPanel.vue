@@ -8,7 +8,7 @@
       <base-input
         placeholder="Graph name..."
         :value="inputGraphNameValue"
-        @input="event => inputGraphNameValue = event.target.value"
+        @input="event => (inputGraphNameValue = event.target.value)"
         @focus="doEditGraphName = true"
         @blur="handleInputGraphNameBlur"
       ></base-input>
@@ -47,7 +47,7 @@
           <span class="FontIcon name_folder size_md"></span>
         </base-icon-button>
       </base-tooltip>
-
+      <!-- 
       <div class="GraphListDropDownWrapper">
         <base-tooltip content="Open from server" placement="bottom">
           <base-icon-button>
@@ -70,7 +70,7 @@
           :currentGraphName="currentGraphName"
           :graphList="graphList"
         ></graph-list-select>
-      </div>
+      </div> -->
 
       <base-tooltip content="Open the graph that was saved to the 'Storage'" placement="bottom">
         <base-icon-button @click="openFromStorage">
@@ -165,7 +165,7 @@
           <span class="FontIcon name_redo flip_horizontal size_md"></span>
         </base-icon-button>
       </base-tooltip>
-      
+
       <base-tooltip content="Redo" placement="bottom">
         <base-icon-button @click="publishEvent('RedoGraph')">
           <span class="FontIcon name_redo size_md"></span>
@@ -223,13 +223,12 @@ export default {
     deleteFromServer() {
       this.publishEvent('DeleteFromServer', { id: this.currentGraphID });
     },
-
-    toSelectNewGraph() {
-      this.$root.interactionSystem.GETRequest('/mock_server/v1/graphContent/object').then(resp => {
-        this.graphList = resp.data;
-        this.graphListIsActive = true;
-      });
-    },
+    // toSelectNewGraph() {
+    //   this.$root.interactionSystem.GETRequest('/mock_server/v1/graphContent/object').then(resp => {
+    //     this.graphList = resp.data;
+    //     this.graphListIsActive = true;
+    //   });
+    // },
     openFromServer(graph) {
       this.publishEvent('OpenFromServer', graph.id);
       this.graphListIsActive = false;
@@ -256,7 +255,7 @@ export default {
     },
 
     handleInputGraphNameBlur() {
-      if ( ! this.inputGraphNameValue) {
+      if (!this.inputGraphNameValue) {
         this.inputGraphNameValue = this.currentGraphName;
       }
 
