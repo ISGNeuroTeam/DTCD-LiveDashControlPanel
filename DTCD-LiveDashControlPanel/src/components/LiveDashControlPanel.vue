@@ -12,17 +12,13 @@
         @focus="doEditGraphName = true"
         @blur="handleInputGraphNameBlur"
       ></base-input>
-      
+
       <!-- <span 
         v-if="doEditGraphName == false"
         class="FontIcon name_edit InputIcon type_edit size_xs">
       </span> -->
-       
-      <button
-        v-if="doEditGraphName"
-        class="InputIcon type_close"
-        @click="cancelEditGraphInfo"
-      >
+
+      <button v-if="doEditGraphName" class="InputIcon type_close" @click="cancelEditGraphInfo">
         <span class="FontIcon name_closeBig size_sm"></span>
       </button>
     </div>
@@ -47,19 +43,21 @@
           <span class="FontIcon name_folder size_md"></span>
         </base-icon-button>
       </base-tooltip>
-      <!-- 
+
       <div class="GraphListDropDownWrapper">
         <base-tooltip content="Open from server" placement="bottom">
           <base-icon-button>
-            <span 
+            <span
               v-if="!graphListIsActive"
-              @click="toSelectNewGraph" 
-              class="FontIcon name_cloudDown size_md">
+              @click="toSelectNewGraph"
+              class="FontIcon name_cloudDown size_md"
+            >
             </span>
-            <span 
+            <span
               v-else
-              @click="graphListIsActive = false" 
-              class="FontIcon name_chevronDown rotate_180 size_md">
+              @click="graphListIsActive = false"
+              class="FontIcon name_chevronDown rotate_180 size_md"
+            >
             </span>
           </base-icon-button>
         </base-tooltip>
@@ -70,7 +68,7 @@
           :currentGraphName="currentGraphName"
           :graphList="graphList"
         ></graph-list-select>
-      </div> -->
+      </div>
 
       <base-tooltip content="Open the graph that was saved to the 'Storage'" placement="bottom">
         <base-icon-button @click="openFromStorage">
@@ -80,11 +78,11 @@
 
       <span class="ButtonsSeparator"></span>
 
-      <!-- <base-tooltip content="Save to the server" placement="bottom">
+      <base-tooltip content="Save to the server" placement="bottom">
         <base-icon-button @click="saveToServer">
           <span class="FontIcon name_save size_md"></span>
         </base-icon-button>
-      </base-tooltip> -->
+      </base-tooltip>
 
       <base-tooltip content="Download file " placement="bottom">
         <base-icon-button @click="publishEvent('SaveToFile', currentGraphName)">
@@ -97,7 +95,7 @@
           <span class="FontIcon name_data size_md"></span>
         </base-icon-button>
       </base-tooltip> -->
-      
+
       <span class="ButtonsSeparator"></span>
 
       <base-tooltip content="Calculate graph" placement="bottom">
@@ -223,18 +221,17 @@ export default {
     deleteFromServer() {
       this.publishEvent('DeleteFromServer', { id: this.currentGraphID });
     },
-    // toSelectNewGraph() {
-    //   this.$root.interactionSystem.GETRequest('/mock_server/v1/graphContent/object').then(resp => {
-    //     this.graphList = resp.data;
-    //     this.graphListIsActive = true;
-    //   });
-    // },
-    openFromServer(graph) {
-      this.publishEvent('OpenFromServer', graph.id);
+    toSelectNewGraph() {
+      this.$root.interactionSystem.GETRequest('/mock_server/v1/fragments/').then(resp => {
+        this.graphList = resp.data.fragments;
+        this.graphListIsActive = true;
+      });
+    },
+    openFromServer(fragmentName) {
+      this.publishEvent('OpenFromServer', fragmentName);
       this.graphListIsActive = false;
-      this.currentGraphID = graph.id;
-      this.currentGraphName = graph.name;
-      this.inputGraphNameValue = graph.name;
+      this.currentGraphName = fragmentName;
+      this.inputGraphNameValue = fragmentName;
     },
 
     openFromStorage() {
