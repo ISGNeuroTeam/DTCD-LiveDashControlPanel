@@ -70,11 +70,11 @@
         ></graph-list-select>
       </div>
 
-      <base-tooltip content="Open the graph that was saved to the 'Storage'" placement="bottom">
+      <!-- <base-tooltip content="Open the graph that was saved to the 'Storage'" placement="bottom">
         <base-icon-button @click="openFromStorage">
           <span class="FontIcon name_open size_md"></span>
         </base-icon-button>
-      </base-tooltip>
+      </base-tooltip> -->
 
       <span class="ButtonsSeparator"></span>
 
@@ -222,16 +222,17 @@ export default {
       this.publishEvent('DeleteFromServer', { id: this.currentGraphID });
     },
     toSelectNewGraph() {
-      this.$root.interactionSystem.GETRequest('/mock_server/v1/fragments/').then(resp => {
+      this.$root.interactionSystem.GETRequest('/mock_server/v1/fragments').then(resp => {
         this.graphList = resp.data.fragments;
         this.graphListIsActive = true;
       });
     },
-    openFromServer(fragmentName) {
-      this.publishEvent('OpenFromServer', fragmentName);
+    openFromServer(fragment) {
+      this.publishEvent('OpenFromServer', fragment);
       this.graphListIsActive = false;
-      this.currentGraphName = fragmentName;
-      this.inputGraphNameValue = fragmentName;
+      this.currentGraphID = fragment.id;
+      this.currentGraphName = fragment.name;
+      this.inputGraphNameValue = fragment.name;
     },
 
     openFromStorage() {

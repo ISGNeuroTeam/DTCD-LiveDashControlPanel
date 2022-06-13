@@ -3,14 +3,15 @@
     <ul class="Menu">
       <li
         class="Item"
-        @click="$emit('updateOption', option)"
-        v-for="(option, index) in this.graphList"
+        @click="$emit('updateOption', fragment)"
+        v-for="(fragment, index) in this.graphList"
         :key="index"
-        :class="option.name === currentGraphName ? 'selected' : ''"
+        :class="fragment.name === currentGraphName ? 'selected' : ''"
       >
-        {{ option }}
+        {{ fragment.name }}
       </li>
     </ul>
+    <!-- <div v-else>No fragments...</div> -->
   </div>
 </template>
 
@@ -20,7 +21,7 @@ export default {
   data() {
     return {};
   },
-  props: ['graphList', 'currentGraphName'],
+  props: { graphList: { type: Array, default: [] }, currentGraphName: { type: String } },
 };
 </script>
 
