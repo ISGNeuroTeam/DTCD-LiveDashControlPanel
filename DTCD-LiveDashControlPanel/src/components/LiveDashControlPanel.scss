@@ -18,13 +18,25 @@
     box-sizing: border-box;
   }
 
+  .FontIcon {
+    color: var(--button_primary);
+
+    &.name_drag:before {
+      color: var(--border);
+    }
+
+    &.name_closeBig:before,
+    &.name_edit:before {
+      color: var(--text_secondary);
+    }
+  }
+
   .DragButton {
     border: none;
     background-color: transparent;
-    height: 24px;
     padding: 0;
-    display: inline-flex;
     padding-right: 8px;
+    font-size: 26px;
   }
 
   .InputWrapper {
@@ -41,7 +53,6 @@
     right: 10px;
     transform: translateY(-50%);
     width: 12px;
-    height: 12px;
     padding: 0;
     background-color: transparent;
     border: none;
@@ -64,7 +75,7 @@
       display: inline-block;
       vertical-align: middle;
     }
-  }
+  } 
 
   .GraphListDropDownWrapper {
     position: relative;

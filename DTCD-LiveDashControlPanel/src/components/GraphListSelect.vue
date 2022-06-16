@@ -1,29 +1,31 @@
 <template>
   <div class="Select">
     <ul class="Menu">
-      <li class="Item"
-        @click="$emit('updateOption', option)"
-        v-for="(option, index) in this.graphList" 
+      <li
+        class="Item"
+        @click="$emit('updateOption', fragment)"
+        v-for="(fragment, index) in this.graphList"
         :key="index"
-        :class="option.name === currentGraphName ? 'selected' : ''"
+        :class="fragment.name === currentGraphName ? 'selected' : ''"
       >
-        {{ option.name }}
+        {{ fragment.name }}
       </li>
     </ul>
+    <!-- <div v-else>No fragments...</div> -->
   </div>
 </template>
 
 <script>
 export default {
-  name:"GraphListSelect",
+  name: 'GraphListSelect',
   data() {
-    return {}
+    return {};
   },
-  props:["graphList", "currentGraphName"],
-}
+  props: { graphList: { type: Array, default: [] }, currentGraphName: { type: String } },
+};
 </script>
 
-<style lang="scss"scoped>
+<style lang="scss" scoped>
 .Select {
   position: absolute;
   top: calc(100% + 10px);
@@ -35,7 +37,7 @@ export default {
   vertical-align: middle;
   z-index: 1;
 
-  .Menu{
+  .Menu {
     border: 1px solid var(--border);
     background-color: var(--background_main);
     list-style-type: none;
@@ -44,7 +46,7 @@ export default {
     margin: 0;
   }
 
-  .Item { 
+  .Item {
     font-weight: 400;
     font-size: 14px;
     color: var(--text_secondary);
