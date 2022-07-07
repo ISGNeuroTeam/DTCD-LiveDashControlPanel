@@ -67,6 +67,7 @@
           @updateOption="openFromServer"
           :currentGraphName="currentGraphName"
           :graphList="graphList"
+          :showPreloader="showGraphListPreloader"
         ></graph-list-select>
       </div>
 
@@ -182,6 +183,7 @@ export default {
   data() {
     return {
       graphListIsActive: false,
+      showGraphListPreloader: false,
       graphList: [],
       currentGraphName: '',
       currentGraphID: null,
@@ -201,7 +203,7 @@ export default {
       this.$root.eventSystem.publishEvent(eventName, args);
     },
     graphListIsActiveHandler(evt) {
-      if (this.$refs.graphListDropDown && !this.$refs.graphListDropDown.$el.contains(evt.target))
+      if (!this.$refs.graphListDropDown && !this.$refs.graphListDropDown.$el.contains(evt.target))
         this.graphListIsActive = false;
     },
     closeSelectNewGraph() {
@@ -222,9 +224,11 @@ export default {
       this.publishEvent('DeleteFromServer', { id: this.currentGraphID });
     },
     toSelectNewGraph() {
+      this.graphListIsActive = true;
+      this.showGraphListPreloader = true;
       this.$root.interactionSystem.GETRequest('/mock_server/v1/fragments').then(resp => {
         this.graphList = resp.data.fragments;
-        this.graphListIsActive = true;
+        this.showGraphListPreloader = false;
       });
     },
     openFromServer(fragment) {

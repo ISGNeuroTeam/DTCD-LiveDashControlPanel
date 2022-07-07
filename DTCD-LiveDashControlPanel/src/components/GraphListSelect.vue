@@ -1,7 +1,17 @@
 <template>
   <div class="Select">
     <ul class="Menu">
+
+      <li 
+        v-if="showPreloader"
+        class="Item"
+      >
+        <span class="FontIcon name_loader size_lg"></span>
+        Загрузка данных...
+      </li>
+
       <li
+        v-else
         class="Item"
         @click="$emit('updateOption', fragment)"
         v-for="(fragment, index) in this.graphList"
@@ -10,8 +20,14 @@
       >
         {{ fragment.name }}
       </li>
+
+      <li 
+        v-if="this.graphList.length === 0 && showPreloader == false"
+        class="Item"
+      >
+        Нет данных
+      </li>
     </ul>
-    <!-- <div v-else>No fragments...</div> -->
   </div>
 </template>
 
@@ -21,7 +37,19 @@ export default {
   data() {
     return {};
   },
-  props: { graphList: { type: Array, default: [] }, currentGraphName: { type: String } },
+  props: { 
+    graphList: { 
+      type: Array, 
+      default: [],
+    }, 
+    currentGraphName: { 
+      type: String 
+    },
+    showPreloader: {
+      type: Boolean,
+      default: false,
+    }
+  },
 };
 </script>
 
@@ -53,6 +81,8 @@ export default {
     padding: 7px 10px;
     border-bottom: 1px solid var(--border);
     cursor: pointer;
+    display: flex;
+    align-items: center;
 
     &:last-child {
       border-bottom: 0;
@@ -66,6 +96,25 @@ export default {
       box-shadow: 0 0 0 3px var(--button_primary);
       color: var(--text_main);
       border-radius: 4.44px;
+    }
+  }
+  .FontIcon {
+
+    &.name_loader {
+      color: var(--border);
+      animation-name: loader;
+      animation-duration: 2.5s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      transform-origin: 50% 50%;
+      will-change: transform;
+      margin-right: 10px;
+    }
+  }
+
+  @keyframes loader {
+    100% {
+      transform: rotate(360deg);
     }
   }
 }
