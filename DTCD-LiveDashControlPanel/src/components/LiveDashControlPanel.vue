@@ -222,7 +222,7 @@ export default {
       this.publishEvent('DeleteFromServer', { id: this.currentGraphID });
     },
     toSelectNewGraph() {
-      this.$root.interactionSystem.GETRequest('/mock_server/v1/fragments').then(resp => {
+      this.$root.interactionSystem.GETRequest('/supergraph/v1/fragments').then(resp => {
         this.graphList = resp.data.fragments;
         this.graphListIsActive = true;
       });
