@@ -68,6 +68,7 @@
           :currentGraphName="currentGraphName"
           :graphList="graphList"
           :showPreloader="showGraphListPreloader"
+          :errorMessage="graphListErrorMsg"
         ></graph-list-select>
       </div>
 
@@ -184,6 +185,7 @@ export default {
     return {
       graphListIsActive: false,
       showGraphListPreloader: false,
+      graphListErrorMsg: '',
       graphList: [],
       currentGraphName: '',
       currentGraphID: null,
@@ -226,10 +228,19 @@ export default {
     toSelectNewGraph() {
       this.graphListIsActive = true;
       this.showGraphListPreloader = true;
-      this.$root.interactionSystem.GETRequest('/supergraph/v1/fragments').then(resp => {
-        this.graphList = resp.data.fragments;
-        this.showGraphListPreloader = false;
-      });
+      this.graphListErrorMsg = '';
+      this.$root.interactionSystem.GETRequest('/supergraph/v1/fragments')
+        .then(resp => {
+          this.graphList = resp.data.fragments;
+          this.graphListErrorMsg = '';
+        })
+        .catch( () => {
+          this.graphListErrorMsg = 'Не удалось получить данные';
+          this.graphList = [];
+        })
+        .finally( () => {
+          this.showGraphListPreloader = false;
+        });
     },
     openFromServer(fragment) {
       this.publishEvent('OpenFromServer', fragment);
