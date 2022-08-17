@@ -13,7 +13,7 @@
         @blur="handleInputGraphNameBlur"
       ></base-input>
 
-      <!-- <span 
+      <!-- <span
         v-if="doEditGraphName == false"
         class="FontIcon name_edit InputIcon type_edit size_xs">
       </span> -->
@@ -223,7 +223,9 @@ export default {
     },
 
     deleteFromServer() {
-      this.publishEvent('DeleteFromServer', { id: this.currentGraphID });
+      if (confirm('Do you really want to delete this graph?')) {
+        this.publishEvent('DeleteFromServer', { id: this.currentGraphID });
+      }
     },
     toSelectNewGraph() {
       this.graphListIsActive = true;
