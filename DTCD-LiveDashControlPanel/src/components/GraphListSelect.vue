@@ -22,7 +22,15 @@
       </li>
 
       <li 
-        v-if="this.graphList.length === 0 && showPreloader == false"
+        v-if="errorMessage"
+        class="Item type_error"
+      >
+        <span class="FontIcon name_error size_md"></span>
+        {{errorMessage}}
+      </li>
+
+      <li 
+        v-else-if="this.graphList.length === 0 && showPreloader == false"
         class="Item"
       >
         Нет данных
@@ -48,6 +56,9 @@ export default {
     showPreloader: {
       type: Boolean,
       default: false,
+    },
+    errorMessage: {
+      type: String
     }
   },
 };
@@ -96,6 +107,18 @@ export default {
       box-shadow: 0 0 0 3px var(--button_primary);
       color: var(--text_main);
       border-radius: 4.44px;
+    }
+
+    &.type_error {
+      color: var(--danger);
+
+      .FontIcon {
+
+        &.name_error {
+          color: var(--danger);
+          margin-right: 5px;
+        }
+      }
     }
   }
   .FontIcon {
