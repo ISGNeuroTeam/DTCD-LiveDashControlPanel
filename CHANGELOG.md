@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - error status for graph-list-select
+- confirmation before deleting the graph from the server
 
 ## [0.5.0]
 
