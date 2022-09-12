@@ -1,3 +1,9 @@
+# [0.8.0] - 2022-09-12
+
+### Added
+
+- added scroll to dropdown list in menu
+
 # [0.7.0] - Graph deletion confirmation
 
 ### Added
