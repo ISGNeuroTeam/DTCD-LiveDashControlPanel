@@ -80,9 +80,12 @@ export default {
     border: 1px solid var(--border);
     background-color: var(--background_main);
     list-style-type: none;
-    padding-left: 0;
     border-radius: 4.44px;
     margin: 0;
+    max-height: 127px;
+    overflow-y: scroll;
+    padding: 3px;
+    margin-top: -1px;
   }
 
   .Item {
@@ -90,13 +93,35 @@ export default {
     font-size: 14px;
     color: var(--text_secondary);
     padding: 7px 10px;
-    border-bottom: 1px solid var(--border);
     cursor: pointer;
     display: flex;
     align-items: center;
+    position: relative;
 
-    &:last-child {
-      border-bottom: 0;
+    & + .Item::after {
+      content: '';
+      position: absolute;
+      top: -0.5px;
+      left: 0;
+      width: calc(100% + 6px);
+      margin-left: -3px;
+      height: 1px;
+      background-color: var(--border);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      box-shadow: 0 0 0 3px var(--button_primary);
+      border-radius: 1px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .1s ease;
+      z-index: 1;
     }
 
     &.selected {
@@ -104,9 +129,12 @@ export default {
     }
 
     &:hover {
-      box-shadow: 0 0 0 3px var(--button_primary);
       color: var(--text_main);
-      border-radius: 4.44px;
+      z-index: 5;
+
+      &::before {
+        opacity: 1;
+      }
     }
 
     &.type_error {
