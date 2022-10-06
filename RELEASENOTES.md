@@ -1,3 +1,9 @@
+# [0.9.0] - 2022-09-30
+
+### Fixed
+
+- Graph dropdown list overlays graph overview
+
 # [0.8.0] - 2022-09-12
 
 ### Added

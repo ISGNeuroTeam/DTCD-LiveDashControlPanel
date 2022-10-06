@@ -5,10 +5,10 @@
   padding: 10px;
   border-bottom: 1px solid var(--border_secondary);
   justify-content: space-between;
+  z-index: 6;
 
   // necessary for the correct work of BaseTooltip and GraphListSelect
   position: relative;
-  z-index: 15;
   font-family: 'Proxima Nova';
 
   &,
