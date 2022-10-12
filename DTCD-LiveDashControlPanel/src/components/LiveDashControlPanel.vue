@@ -1,5 +1,6 @@
 <template>
   <div class="LiveDashControlPanel">
+    <div class="Overlay" v-if="graphListIsActive" @click="graphListIsActive = false"></div>
     <!-- <button class="DragButton">
       <span class="FontIcon name_drag size_lg"></span>
     </button> -->
