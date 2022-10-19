@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+### Added
+
+- property to change icons
+
+### Changed
+
+- graph list select changed to Base Dropdown
+
 ### Fixed 
 
 - closing of GraphListSelect when clicked outside
