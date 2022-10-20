@@ -15,9 +15,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - graph list select changed to Base Dropdown
 
-### Fixed 
+### Fixed
 
 - closing of GraphListSelect when clicked outside
+
+## [0.9.0]
+
+### Fixed
+
+- graph dropdown list overlays graph overview
 
 ## [0.8.0]
 
