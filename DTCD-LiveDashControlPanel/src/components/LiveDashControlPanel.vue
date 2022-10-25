@@ -1,5 +1,6 @@
 <template>
   <div class="LiveDashControlPanel">
+    <div class="Overlay" v-if="graphListIsActive" @click="graphListIsActive = false"></div>
     <!-- <button class="DragButton">
       <span class="FontIcon name_drag size_lg"></span>
     </button> -->
@@ -44,34 +45,38 @@
         </base-icon-button>
       </base-tooltip>
 
-      <div class="GraphListDropDownWrapper">
-        <base-tooltip content="Open from server" placement="bottom">
-          <base-icon-button>
-            <span
-              v-if="!graphListIsActive"
-              @click="toSelectNewGraph"
-              class="FontIcon name_cloudDown size_md"
-            >
-            </span>
-            <span
-              v-else
-              @click="graphListIsActive = false"
-              class="FontIcon name_chevronDown rotate_180 size_md"
-            >
-            </span>
-          </base-icon-button>
-        </base-tooltip>
-        <graph-list-select
-          v-show="graphListIsActive"
-          ref="graphListDropDown"
-          @updateOption="openFromServer"
-          :currentGraphName="currentGraphName"
-          :graphList="graphList"
-          :showPreloader="showGraphListPreloader"
-          :errorMessage="graphListErrorMsg"
-        ></graph-list-select>
-      </div>
+      <base-dropdown class="GraphListDropDownWrapper">
+        <div slot="toggle-btn">
+          <base-tooltip content="Open from server" placement="bottom" >  
+            <base-icon-button>
+              <span
+                v-if="!graphListIsActive"
+                @click="toSelectNewGraph"
+                class="FontIcon size_md"
+                :class="arrowIcon"
+              />
+              <span
+                v-else
+                @click="graphListIsActive = false"
+                class="FontIcon size_md"
+                :class="arrowIcon"
+              />
+            </base-icon-button>
+          </base-tooltip>
 
+          <GraphListSelect
+            v-show="graphListIsActive"
+            ref="graphListDropDown"
+            @updateOption="openFromServer"
+            :currentGraphName="currentGraphName"
+            :graphList="graphList"
+            :showPreloader="showGraphListPreloader"
+            :errorMessage="graphListErrorMsg"
+          ></GraphListSelect>
+        </div>
+        <span slot="icon-arrow"/>
+      </base-dropdown>  
+     
       <!-- <base-tooltip content="Open the graph that was saved to the 'Storage'" placement="bottom">
         <base-icon-button @click="openFromStorage">
           <span class="FontIcon name_open size_md"></span>
@@ -193,6 +198,15 @@ export default {
       doEditGraphName: false,
       inputGraphNameValue: '',
     };
+  },
+  computed: {
+    arrowIcon() {
+      if (this.graphListIsActive) {
+        return 'FontIcon name_chevronDown rotate_180';
+      } else {
+        return 'FontIcon name_cloudDown';
+      }
+    },
   },
   mounted() {
     document.addEventListener('click', this.graphListIsActiveHandler);

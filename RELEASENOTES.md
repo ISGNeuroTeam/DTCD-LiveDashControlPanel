@@ -1,3 +1,9 @@
+# [0.10.0] - 2022-10-21
+
+### Added
+
+- Closing the list of graphs when clicking outside it
+
 # [0.9.0] - 2022-09-30
 
 ### Fixed
