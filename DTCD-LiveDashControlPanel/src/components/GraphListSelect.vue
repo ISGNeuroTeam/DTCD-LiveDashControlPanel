@@ -82,7 +82,7 @@ export default {
     list-style-type: none;
     border-radius: 4.44px;
     margin: 0;
-    max-height: 127px;
+    max-height: 251px;
     overflow-y: scroll;
     padding: 3px;
     margin-top: -1px;
