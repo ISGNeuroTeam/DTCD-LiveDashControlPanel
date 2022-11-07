@@ -1,3 +1,9 @@
+# [0.11.0] - 2022-11-02
+
+### Chnaged
+
+- Max height of graph list
+
 # [0.10.0] - 2022-10-21
 
 ### Added
