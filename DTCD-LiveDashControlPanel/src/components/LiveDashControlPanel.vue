@@ -48,16 +48,21 @@
       <base-dropdown class="GraphListDropDownWrapper">
         <div slot="toggle-btn">
           <base-tooltip content="Open from server" placement="bottom" >  
-            <base-icon-button>
+            <base-icon-button
+              v-if="!graphListIsActive"
+              @click="toSelectNewGraph"
+            >
               <span
-                v-if="!graphListIsActive"
-                @click="toSelectNewGraph"
                 class="FontIcon size_md"
                 :class="arrowIcon"
               />
+            </base-icon-button>
+
+            <base-icon-button
+              v-else
+              @click="graphListIsActive = false"
+            >
               <span
-                v-else
-                @click="graphListIsActive = false"
                 class="FontIcon size_md"
                 :class="arrowIcon"
               />
