@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - click handler attached to the button
+- duplication of active menu item in select of graph list
 
 ## [0.11.0]
 
