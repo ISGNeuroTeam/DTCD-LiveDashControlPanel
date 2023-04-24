@@ -82,7 +82,7 @@
             v-show="graphListIsActive"
             ref="graphListDropDown"
             @updateOption="openFromServer"
-            :currentGraphName="currentGraphName"
+            :currentGraphID="currentGraphID"
             :graphList="graphList"
             :showPreloader="showGraphListPreloader"
             :errorMessage="graphListErrorMsg"

@@ -15,8 +15,8 @@
         class="Item"
         @click="$emit('updateOption', fragment)"
         v-for="(fragment, index) in this.graphList"
-        :key="index"
-        :class="fragment.name === currentGraphName ? 'selected' : ''"
+        :key="fragment.id+index"
+        :class="fragment.id === currentGraphID ? 'selected' : ''"
       >
         {{ fragment.name }}
       </li>
@@ -50,7 +50,7 @@ export default {
       type: Array, 
       default: [],
     }, 
-    currentGraphName: { 
+    currentGraphID: { 
       type: String 
     },
     showPreloader: {
