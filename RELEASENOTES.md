@@ -1,3 +1,14 @@
+# [0.12.0] - 2023-05-23
+
+### Added
+
+- Role model for creating, removing or saving graphs
+
+### Fixed
+
+- Correct opening and closing of graph list
+- Duplication of active menu item in select of graph list
+
 # [0.11.0] - 2022-11-02
 
 ### Chnaged
