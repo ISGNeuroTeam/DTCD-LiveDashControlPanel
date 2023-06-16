@@ -1,6 +1,10 @@
 <template>
   <div class="LiveDashControlPanel">
-    <div class="Overlay" v-if="graphListIsActive" @click="graphListIsActive = false"></div>
+    <div
+      class="Overlay"
+      v-if="graphListIsActive"
+      @click="graphListIsActive = false"
+    ></div>
     <!-- <button class="DragButton">
       <span class="FontIcon name_drag size_lg"></span>
     </button> -->
@@ -19,16 +23,16 @@
         class="FontIcon name_edit InputIcon type_edit size_xs">
       </span> -->
 
-      <button v-if="doEditGraphName" class="InputIcon type_close" @click="cancelEditGraphInfo">
+      <button
+        v-if="doEditGraphName"
+        class="InputIcon type_close"
+        @click="cancelEditGraphInfo"
+      >
         <span class="FontIcon name_closeBig size_sm"></span>
       </button>
     </div>
     <div class="Buttons">
-      <base-tooltip
-        content="Create new graph"
-        placement="bottom"
-
-      >
+      <base-tooltip content="Create new graph" placement="bottom">
         <base-icon-button
           :disabled="!isAllowToCreateGraph"
           @click="publishEvent('ClearGraph')"
@@ -56,25 +60,16 @@
 
       <base-dropdown class="GraphListDropDownWrapper">
         <div slot="toggle-btn">
-          <base-tooltip content="Open from server" placement="bottom" >  
+          <base-tooltip content="Open from server" placement="bottom">
             <base-icon-button
               v-if="!graphListIsActive"
               @click="toSelectNewGraph"
             >
-              <span
-                class="FontIcon size_md"
-                :class="arrowIcon"
-              />
+              <span class="FontIcon size_md" :class="arrowIcon" />
             </base-icon-button>
 
-            <base-icon-button
-              v-else
-              @click="graphListIsActive = false"
-            >
-              <span
-                class="FontIcon size_md"
-                :class="arrowIcon"
-              />
+            <base-icon-button v-else @click="graphListIsActive = false">
+              <span class="FontIcon size_md" :class="arrowIcon" />
             </base-icon-button>
           </base-tooltip>
 
@@ -88,9 +83,9 @@
             :errorMessage="graphListErrorMsg"
           ></GraphListSelect>
         </div>
-        <span slot="icon-arrow"/>
-      </base-dropdown>  
-     
+        <span slot="icon-arrow" />
+      </base-dropdown>
+
       <!-- <base-tooltip content="Open the graph that was saved to the 'Storage'" placement="bottom">
         <base-icon-button @click="openFromStorage">
           <span class="FontIcon name_open size_md"></span>
@@ -100,10 +95,7 @@
       <span class="ButtonsSeparator"></span>
 
       <base-tooltip content="Save to the server" placement="bottom">
-        <base-icon-button
-          @click="saveToServer"
-          :disabled="!isAllowToSaveGraph"
-        >
+        <base-icon-button @click="saveToServer" :disabled="!isAllowToSaveGraph">
           <span class="FontIcon name_save size_md"></span>
         </base-icon-button>
       </base-tooltip>
@@ -214,22 +206,24 @@ export default {
       inWait: false,
       doEditGraphName: false,
       inputGraphNameValue: '',
-      isAllowToCreateGraph:true,
-      isAllowToUpdateGraph:true,
-      permissions: []
-
+      isAllowToCreateGraph: true,
+      isAllowToUpdateGraph: true,
+      permissions: [],
     };
   },
   computed: {
     isAllowToSaveGraph() {
-      return (!this.currentGraphID && this.isAllowToCreateGraph)
-        || (this.currentGraphID && this.isAllowToUpdateGraph)
+      return (
+        (!this.currentGraphID && this.isAllowToCreateGraph) ||
+        (this.currentGraphID && this.isAllowToUpdateGraph)
+      );
     },
     isAllowToDeleteGraph() {
-      const isAllowToDelete = !this.permissions.filter(item => item.name.includes('graph.'))
-      .filter(item => item.name.includes('.delete'))
-      .find(item => item.name.split('.')[1] === this.currentGraphName)
-      return isAllowToDelete
+      const isAllowToDelete = !this.permissions
+        .filter(item => item.name.includes('graph.'))
+        .filter(item => item.name.includes('.delete'))
+        .find(item => item.name.split('.')[1] === this.currentGraphName);
+      return isAllowToDelete;
     },
     arrowIcon() {
       if (this.graphListIsActive) {
@@ -238,17 +232,26 @@ export default {
         return 'FontIcon name_cloudDown';
       }
     },
+    readPermissions() {
+      return this.permissions
+        .filter(item => item.name.includes('graph.'))
+        .filter(item => item.name.includes('.read'))
+        .map(item => item.name.split('.')[1]);
+    },
   },
   mounted() {
     document.addEventListener('click', this.graphListIsActiveHandler);
-    this.$root.interactionSystem.GETRequest('dtcd_utils/v1/user?photo_quality=low')
-    .then((response) => {
-      this.permissions = response.data.groups;
-      if (!this.permissions.length) return;
-      this.isAllowToCreateGraph = !this.permissions.find(item => item.name.includes('graphs.create'))
+    this.$root.interactionSystem
+      .GETRequest('dtcd_utils/v1/user?photo_quality=low')
+      .then(response => {
+        this.permissions = response.data.groups;
+        if (!this.permissions.length) return;
+        this.isAllowToCreateGraph = !this.permissions.find(item =>
+          item.name.includes('graphs.create')
+        );
 
-      return
-    });
+        return;
+      });
   },
   beforeDestroy() {
     document.removeEventListener('click', this.graphListIsActiveHandler);
@@ -258,7 +261,10 @@ export default {
       this.$root.eventSystem.publishEvent(eventName, args);
     },
     graphListIsActiveHandler(evt) {
-      if (!this.$refs.graphListDropDown && !this.$refs.graphListDropDown.$el.contains(evt.target))
+      if (
+        !this.$refs.graphListDropDown &&
+        !this.$refs.graphListDropDown.$el.contains(evt.target)
+      )
         this.graphListIsActive = false;
     },
     closeSelectNewGraph() {
@@ -268,12 +274,15 @@ export default {
       if (graphInfo) {
         const { id = null, name = '' } = graphInfo;
         if (name) {
-          const isAllowToUpdate = !this.permissions.filter(item => item.name.includes('graph.'))
-          .filter(item => item.name.includes('.update'))
-          .find(item => item.name.split('.')[1] === name)
-          this.isAllowToUpdateGraph = isAllowToUpdate
+          const isAllowToUpdate = !this.permissions
+            .filter(item => item.name.includes('graph.'))
+            .filter(item => item.name.includes('.update'))
+            .find(item => item.name.split('.')[1] === name);
+          this.isAllowToUpdateGraph = isAllowToUpdate;
         } else {
-          this.isAllowToCreateGraph = !this.permissions.find(item => item.name.includes('graphs.create'))
+          this.isAllowToCreateGraph = !this.permissions.find(item =>
+            item.name.includes('graphs.create')
+          );
         }
         this.currentGraphID = id;
         this.currentGraphName = name;
@@ -284,7 +293,11 @@ export default {
     },
 
     deleteFromServer() {
-      if (confirm('Do you really want to delete this graph?')) {
+      if (
+        confirm(
+          `Вы действительно хотите удалить граф '${this.currentGraphName}'?`
+        )
+      ) {
         this.publishEvent('DeleteFromServer', { id: this.currentGraphID });
       }
     },
@@ -293,30 +306,23 @@ export default {
       this.showGraphListPreloader = true;
       this.graphListErrorMsg = '';
 
-      const readPermissions = []
-      if (this.permissions.length){
-        readPermissions.push(
-          ...this.permissions.filter(item => item.name.includes('graph.'))
-          .filter(item => item.name.includes('.read'))
-          .map(item => item.name.split('.')[1])
-        )
+      try {
+        await this.getGraphList();
+      } catch (er) {
+        this.graphListErrorMsg = 'Не удалось получить данные';
+        this.graphList = [];
+      } finally {
+        this.showGraphListPreloader = false;
       }
-
-
-
-
-      this.$root.interactionSystem.GETRequest('/supergraph/v1/fragments')
-        .then(resp => {
-          this.graphList = resp.data.fragments.filter(graph => !readPermissions.includes(graph.name));
-          this.graphListErrorMsg = '';
-        })
-        .catch( () => {
-          this.graphListErrorMsg = 'Не удалось получить данные';
-          this.graphList = [];
-        })
-        .finally( () => {
-          this.showGraphListPreloader = false;
-        });
+    },
+    async getGraphList() {
+      const { data } = await this.$root.interactionSystem.GETRequest(
+        '/supergraph/v1/fragments'
+      );
+      this.graphList = data.fragments.filter(
+        graph => !this.readPermissions.includes(graph.name)
+      );
+      this.graphListErrorMsg = '';
     },
     openFromServer(fragment) {
       this.publishEvent('OpenFromServer', fragment);
@@ -330,10 +336,33 @@ export default {
       console.log('storageSystem not supported');
     },
 
-    saveToServer() {
+    async saveToServer() {
       if (!this.inputGraphNameValue) {
-        alert('Please, enter name of new graph or select saved graph!');
-      } else {
+        return alert('Пожалуйтса, задайте имя для нового графа!');
+      }
+
+      if (this.graphList.length === 0) {
+        await this.getGraphList();
+      }
+
+      const alreadyExists = this.graphList.find(
+        graph =>
+          graph.name === this.inputGraphNameValue &&
+          graph.id !== this.currentGraphID
+      );
+
+      if (
+        alreadyExists &&
+        confirm(
+          `Граф с именем '${this.inputGraphNameValue}' уже существует! Нажмите 'OK' чтобы перетереть, 'Cancel' чтобы отменить.`
+        )
+      ) {
+        this.publishEvent('SaveToServer', {
+          name: this.inputGraphNameValue.trim(),
+          id: alreadyExists.id,
+        });
+        return;
+      } else if (!alreadyExists) {
         this.publishEvent('SaveToServer', {
           name: this.inputGraphNameValue.trim(),
           id: this.currentGraphID,
