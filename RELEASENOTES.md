@@ -1,3 +1,9 @@
+# [0.13.0] - 2023-07-06
+
+### Changed
+
+- Graph saving checks if graph with the same name exists and offer to rewrite it or cancel
+
 # [0.12.0] - 2023-05-23
 
 ### Added
