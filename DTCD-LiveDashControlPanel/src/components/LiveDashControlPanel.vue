@@ -354,7 +354,7 @@ export default {
       if (
         alreadyExists &&
         confirm(
-          `Граф с именем '${this.inputGraphNameValue}' уже существует! Нажмите 'OK' чтобы перетереть, 'Cancel' чтобы отменить.`
+          `Граф с именем "${this.inputGraphNameValue}" уже существует. Заменить существующий граф?`
         )
       ) {
         this.publishEvent('SaveToServer', {
